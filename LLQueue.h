@@ -39,9 +39,6 @@ private:
 
 
 
-
-#endif
-
 template<class T>
 LLQueue<T>::LLQueue()
 {
@@ -161,3 +158,4 @@ void LLQueue<T>::clear()
 	}
 }
 
+#endif

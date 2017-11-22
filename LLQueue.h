@@ -15,7 +15,7 @@ private:
 		T data;
 		Node<T>*previous;
 		Node<T>*next;
-		Node(T d,Node<T>*prev=NULL,Node<T>*n=NULL):data(d),previous(prev),next(n) {}
+		Node(const T & d,Node<T>*prev=NULL,Node<T>*n=NULL):data(d),previous(prev),next(n) {}
 	};
 public:
 	LLQueue();
@@ -28,7 +28,6 @@ public:
 	void Enqueue(const T&element);
 	void Dequeue();
 	T getFront()const;
-	T getLast()const;
 	bool isEmpty()const;
 	void Print(std::ostream&o)const;
 
@@ -96,7 +95,12 @@ template<class T>
 template<class T>
 void LLQueue<T>::Dequeue()
  {
-	 if (!isEmpty())
+	if (top == end)
+	{
+		delete top;
+		end = top = NULL;
+	 }
+	 else if(!isEmpty() && top!=end)
 	 {
 		 Node<T>*temp = end->previous;
 		 delete end;
@@ -112,11 +116,6 @@ void LLQueue<T>::Dequeue()
 	 return end->data;
  }
 
- template<class T>
- T LLQueue<T>::getLast() const
- {
-	 return top->data;
- }
 
 template<class T>
  bool LLQueue<T>::isEmpty() const
@@ -144,10 +143,13 @@ template<class T>
 template <class T>
 void LLQueue<T>::copyFrom(const LLQueue & other)
 {
+	if (!isEmpty())
+	{
+		clear();
+	}
+
 	if (other.isEmpty())
 		return;
-	
-	clear();
 
 	//pointer to other's top node
 	Node<T>*tempOther = other.top;
@@ -184,4 +186,6 @@ void LLQueue<T>::clear()
 		top = end = NULL;
 	}
 }
+
+
 
